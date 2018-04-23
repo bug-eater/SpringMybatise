@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--UserDao的映射文件，UserDao的实现-->
+<mapper namespace="com.newer.dao.ArticleMapper">
+
+    <resultMap id="ArticleList" type="com.newer.pojo.Article">
+        <result property="title" column="TITLE"></result>
+        <result property="content" column="CONTENT"></result>
+        <result property="publish_time" column="PUBLIC_TIME"></result>
+        <collection property="articleCommts" ofType="com.newer.pojo.ArticleCommt">
+        <result property="commt" column="COMMT"></result>
+        <result property="commt_time" column="COMMT_TIME"></result>
+    </collection>
+        <collection property="authors" ofType="com.newer.pojo.Author">
+            <result property="name" column="NAME"></result>
+            <result property="sex" column="SEX"></result>
+        </collection>
+    </resultMap>
+<select id="findAll" resultMap="ArticleList">
+    select title,content,publish_time,name,sex,commt,commt_time,FROM  article r LEFT JOIN author u on r.au_id=u.id LEFT JOIN  article_commt a on a.ar_id=r.id
+</select>
+</mapper>
